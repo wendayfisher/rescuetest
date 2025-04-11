@@ -1,0 +1,116 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,requiresActiveX=true"/>
+    <!-- *************************************************************************************************************** -->
+    <!-- *** LogMeIn Rescue InstantChat                                                                                  -->
+    <!-- ***                                                                                                             -->
+    <!-- *** Each element style is documented in detail in the LogMeIn Rescue Instant Chat Feature Guide:                -->
+    <!-- *** https://secure.logmeinrescue.com/Common/Pdfs/Rescue_FeatureGuide_InstantChat.pdf                            -->
+    <!-- ***                                                                                                             -->
+    <!-- *** Image resources for self-hosted Instant Chat are available for download in a single compressed file at      -->
+    <!-- *** https://secure.logmeinrescue.com/InstantChat/Standard/Images.zip                                            -->
+    <!-- ***                                                                                                             -->
+    <!-- *** Instant Chat uses document type XHTML 1.0 Transitional!                                                     -->
+    <!-- *************************************************************************************************************** -->
+    <title>LogMeIn Rescue - Remote Access Software and Remote Control Software</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://secure.logmeinrescue.com/InstantChat/InstantChat.aspx"></script>
+    <script type="text/javascript" src="/Common/Scripts/json/json2.js"></script>
+    <script type="text/javascript">
+        function loadInstantChat()
+        {
+            var ICLoader = new RescueInstantChatLoader();
+            ICLoader.ICContainer = "ICContainer";
+            ICLoader.ApplicationID = "RescueInstantChat";
+           
+            
+            ICLoader.HostedCSS = 'https://raw.githubusercontent.com/wendayfisher/rescuetest/refs/heads/main/InstantChat.css';
+            
+            
+            ICLoader.HostedLanguagesForChatOnlyMode = 'https://secure.logmeinrescue.com/InstantChat/LanguagesForChatOnlyMode.js?v=16010101000000';
+            ICLoader.HostedLanguagesForAppletMode = 'https://secure.logmeinrescue.com/InstantChat/LanguagesForAppletMode.js?v=16010101000000';
+            ICLoader.PageTitle = "###COMPANYNAME###";
+            ICLoader.PrivateCode = null;
+            ICLoader.EntryID = '6032277';
+            ICLoader.Name = null;
+            ICLoader.Comment1 = null;
+            ICLoader.Comment2 = null;
+            ICLoader.Comment3 = null;
+            ICLoader.Comment4 = null;
+            ICLoader.Comment5 = null;
+            ICLoader.Tracking0 = null;
+            ICLoader.Language = 'en';
+            ICLoader.HostedErrorHandler = function (ErrorName) {
+            };
+            ICLoader.Start();
+            ICLoader.centralizeGUI();
+        }
+
+        function isInHighContrastMode() {
+
+            let hcDetect = $('<div id="highContrastDetect" style="width: 0px; height: 0px;"></div>').css('background-color', '#ff0000');
+
+            hcDetect.appendTo(document.body);
+
+            var bgColor = hcDetect.css('background-color').toLowerCase();
+
+            if (bgColor !== "#ff0000" && bgColor !== "rgb(255, 0, 0)") {
+                return true;
+            }
+            
+            return false;
+        }
+    </script>
+
+</head>
+<body onload="loadInstantChat();" onresize="ICLoader!==null ? ICLoader.centralizeGUI() : null">
+    <noscript>
+        <div style="position: absolute; left: 0px; top: 0px; width: 1000px; height: 500px; z-index: 1002; background-color: #FFFFFF; color: #000000; font-family: tahoma, arial, verdana">
+            <div style="position: absolute; left: 20px; top: 20px; font-size: 18px">To use the Instant Chat feature, please ensure you have Javascript enabled in your web browser.</div>
+            <div style="position: absolute; left: 20px; top: 50px; font-size: 15px">Once you have enabled Javascript, please refresh this page.</div>
+        </div>
+    </noscript>
+    <div id="ICContainer" style="position: absolute; left: 0px; top: 0px; width: 360px; height: 460px"></div>
+
+     <script type="text/javascript">
+
+        function iframeSetup() {
+            var contentIframe = document.getElementById('ic_mainframe');
+
+            if (!contentIframe) {
+                setTimeout(iframeSetup, 200);
+            }
+            else {
+                contentIframe.onload = setHighContrastTheme;
+            }
+        }
+
+        function setHighContrastTheme() {
+            // at this point we are still out of the iframe context so we need to retrive it from the hosting document
+            var contentIframe = document.getElementById('ic_mainframe');
+            var icDocument = contentIframe.contentDocument || contentIframe.contentWindow.document;
+
+            console.log(icDocument);
+
+            var fileSendButton = icDocument.getElementById('ic_filesend_button');
+            fileSendButton.innerHTML = "📁";
+
+            var disconnectButton = icDocument.getElementById('ic_disconnect_button');
+            disconnectButton.innerHTML = "❌";
+
+            var chatSendButton = icDocument.getElementById('ic_send_button');
+            chatSendButton.innerHTML = '&#9166';
+         }
+
+         if (isInHighContrastMode()) {
+             setTimeout(iframeSetup, 200);
+         }
+    </script>
+</body>
+</html>
